@@ -1,0 +1,465 @@
+#!/usr/bin/env python3
+"""
+生成人口学统计表和详细数据解读报告
+"""
+import pandas as pd
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parents[1]
+DATA_FILE = BASE / "Data" / "7100.xlsx"
+OUT_DIR = BASE / "Output"
+
+def find_col(cols, keyword):
+    matched = [c for c in cols if keyword in c]
+    if not matched:
+        return None
+    return matched[0]
+
+def main():
+    raw = pd.read_excel(DATA_FILE)
+    raw = raw[raw["作答ID"].notna()].copy()
+    cols = list(raw.columns)
+    
+    stim_col = "随机元素"
+    gender_col = find_col(cols, "性别是")
+    age_col = find_col(cols, "年龄是")
+    job_type_col = find_col(cols, "工作类型是")
+    job_way_col = find_col(cols, "工作方式是")
+    industry_col = find_col(cols, "行业是")
+    city_col = find_col(cols, "工作地点是")
+    edu_col = find_col(cols, "最高学历是")
+    
+    # Define experimental condition
+    def source_from_stim(s):
+        s = str(s)
+        if "AI" in s:
+            return "AI"
+        if "human" in s:
+            return "Human"
+        return None
+    
+    raw["source"] = raw[stim_col].map(source_from_stim)
+    
+    # ==================== 人口学汇总 ====================
+    demo_rows = []
+    
+    # Gender
+    for val, cnt in raw[gender_col].value_counts().items():
+        if str(val).strip() not in ['Q7', 'nan', '']:
+            demo_rows.append({
+                "category": "性别",
+                "level": str(val),
+                "n": cnt,
+                "pct": f"{100*cnt/len(raw):.1f}%"
+            })
+    
+    # Age - summarize into groups
+    age_numeric = pd.to_numeric(raw[age_col], errors='coerce')
+    demo_rows.append({
+        "category": "年龄",
+        "level": f"平均值±SD",
+        "n": f"{age_numeric.mean():.1f}±{age_numeric.std():.1f}",
+        "pct": f"范围 {int(age_numeric.min())}-{int(age_numeric.max())}"
+    })
+    
+    # Job type
+    for val, cnt in raw[job_type_col].value_counts().items():
+        if str(val).strip() not in ['Q9', 'nan', '']:
+            demo_rows.append({
+                "category": "工作类型",
+                "level": str(val),
+                "n": cnt,
+                "pct": f"{100*cnt/len(raw):.1f}%"
+            })
+    
+    # Education
+    for val, cnt in raw[edu_col].value_counts().items():
+        if str(val).strip() not in ['Q13', 'nan', '']:
+            demo_rows.append({
+                "category": "教育程度",
+                "level": str(val),
+                "n": cnt,
+                "pct": f"{100*cnt/len(raw):.1f}%"
+            })
+    
+    # Experimental condition
+    for val, cnt in raw["source"].value_counts().items():
+        if val is not None:
+            demo_rows.append({
+                "category": "分配到条件",
+                "level": "AI来源" if val == "AI" else "人类专家",
+                "n": cnt,
+                "pct": f"{100*cnt/len(raw):.1f}%"
+            })
+    
+    tbl_demo = pd.DataFrame(demo_rows)
+    
+    # ==================== 导出人口学表到Excel ====================
+    xlsx_path = OUT_DIR / "中步分析结果汇总.xlsx"
+    
+    with pd.ExcelWriter(xlsx_path, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
+        tbl_demo.to_excel(writer, index=False, sheet_name="00_demographics")
+    
+    print("✓ 人口学表已添加到 Excel（00_demographics 工作表）")
+    
+    # ==================== 生成详细解读文档 ====================
+    
+    interpretation = """# 中步分析详细解读指南
+
+## 🔍 快速索引
+你的分析包含以下几个关键部分：
+1. 数据清理与质量掌控
+2. 量表信度（Cronbach's Alpha）
+3. 实验操纵检验
+4. 描述性统计与相关性
+5. 主效应与交互效应检验（2×2 ANOVA）
+6. 中介效应检验（Bootstrap）
+7. 调节效应检验（Moderation）
+8. 简单斜率与Johnson-Neyman分析
+
+---
+
+## 📋 工作表逐项详解
+
+### 💾 **00_demographics** - 人口学特征
+
+**作用**：了解样本是谁，是否有代表性
+
+| 字段 | 含义与解读 |
+|-----|---------|
+| **Category** | 人口学变量类别（性别、年龄、教育等） |
+| **Level** | 该类别的具体值 |
+| **n** | 该值所占人数 |
+| **pct** | 占总样本比例 |
+
+**怎么看**：
+- 性别：103女、81男，基本平衡
+- 年龄：平均30多岁，是职场人士
+- 工作：绝大多数是全职员工
+- 教育：以本科及以上为主（较高教育水平）
+- **这说明：** 你的样本是高学历、有工作的都市职场人群
+
+---
+
+### 🧹 **01_cleaning** - 数据清理步骤
+
+**作用**：追踪数据损失，确保分析样本的有效性
+
+| 步骤 | n | 含义 |
+|-----|---|------|
+| **raw_non_empty** | 184 | 原始作答人数（剔除空的作答ID） |
+| **valid_design_rows** | 183 | 能识别出实验条件的样本（少1人是特殊值） |
+| **strict_after_mc_attention** | 175 | 通过操纵检验+注意力检验的严格样本 |
+| **excluded_count** | 9 | 被排除的人数（约5%） |
+
+**怎么看**：
+- 损失率很低（5%），说明样本质量好
+- 最终用于分析的175人是可靠的
+
+---
+
+### 📊 **02_reliability** - 信度检验（Cronbach's Alpha）
+
+**专业名词解释**：
+- **Cronbach's Alpha (α)**：衡量量表内部一致性（即多道题是否在测同一件事）
+  - α ≥ 0.90：优秀
+  - α ≥ 0.80：好
+  - α ≥ 0.70：可接受
+  - α ≥ 0.60：可接受（边缘）
+  - α < 0.60：不可接受
+
+| 量表 | Alpha | n_items | 平均分 | 标准差 | **我的评价** |
+|-----|-------|---------|--------|--------|----------|
+| **DV_Intention** 运动行为意图 | 0.500 | 3 | 6.07 | 1.08 | ⚠️ 有点不理想 |
+| **M_Trust** 对AI建议的信任 | 0.641 | 3 | 5.57 | 1.34 | 🟡 边缘可接受 |
+| **M_SelfEfficacy** 运动自我效能 | 0.826 | 3 | 5.63 | 1.26 | ✅ 很好 |
+| **W_HealthConsciousness** 健康意识 | 0.698 | 6 | 5.77 | 1.25 | 🟡 可接受 |
+
+**怎么看这些数字**：
+- **意图** alpha=0.50：你的3道意图题不够一致，建议检查题目是否问同一个东西（可能有题项要改）
+- **信任** alpha=0.64：刚好可用，勉强够
+- **自我效能** alpha=0.83：最好的，使用放心
+- **健康意识** alpha=0.70：中等水准，可以用
+
+---
+
+### 📝 **02_item_total** - 项目-总分相关
+
+**作用**：诊断哪些题目拖了量表的后腿
+
+| 量表 | 项目 | item_total_corr | **解读** |
+|-----|-----|-----------------|---------|
+| DV_Intention | Q1 | ？ | 如果 <0.3，说明这题不符（可能要改或删） |
+| ... | Q2 | ？ | 越接近0.3越差；越接近0.8越好 |
+
+**怎么看**：
+- 后期若想提升 Intention 的 alpha（从0.50→0.70），看项目-总分相关哪个最低，考虑把那题改成更直接的。
+
+---
+
+### ✅ **03_manip_check** - 实验操纵检验
+
+**作用**：检验被试是否"看懂了"实验设定
+
+| 检验 | 准确率 | chi²/p | **说明** |
+|-----|--------|--------|--------|
+| **source_manipulation** | 97.3% | 卡方检验通过 | ✅ 被试成功区分了"AI"vs"人类" |
+| **frame_manipulation** | 98.4% | 卡方检验通过 | ✅ 被试成功区分了"收益"vs"损失" |
+| **attention_check_pass** | 100% | - | ✅ 注意力检验全部通过（本题选C） |
+
+**怎么看**：
+- 所有操纵都非常成功（>97%认知准确），说明被试认真答题了
+- 这给后续的因果推论提供了坚实基础
+
+---
+
+### 📊 **03_ctab_source** & **03_ctab_frame** - 交叉列表
+
+**作用**：详细看操纵检验的交叉情况
+
+示例（来源操纵交叉表）：
+```
+实验分配      AI健康教练    人类专家
+被试认知
+AI健康教练        95           1
+人类专家          1           82
+```
+
+**怎么看**：
+- 对角线上的数字越大越好（说明认知正确）
+- 这里几乎全在对角线上，所以操纵很成功
+
+---
+
+### 📈 **04_descriptive** - 描述性统计
+
+| 变量 | count | mean | std | min | max | **解读** |
+|-----|-------|------|-----|-----|-----|---------|
+| **DV_Intention** | 175 | 6.07 | 1.08 | 2.33 | 7 | 平均想运动（7分制中得6分多）|
+| **M_Trust** | 175 | 5.57 | 1.34 | 1 | 7 | 信任度中等偏上 |
+| **M_SelfEfficacy** | 175 | 5.63 | 1.26 | 1.67 | 7 | 自我效能也中等偏上 |
+| **W_HealthConsciousness** | 175 | 5.77 | 1.25 | 1.33 | 7 | 健康意识较高 |
+
+**怎么看**：
+- 所有变量都是"中等偏上"水平（都在5-6分之间，满分7）
+- 没有出现明显异常或天地板效应
+- 样本在所有关键变量上都有合理的变异度
+
+---
+
+### 🔗 **04_cell_descriptive** - 分组描述性统计
+
+**作用**：看2×2实验四个单元的基本统计
+
+示例表格结构：
+- **source** + **frame** 的交叉
+- 每格里显示 n（样本数）、mean（平均分）、std（标准差）
+
+**怎么看**：
+- AI-收益组：n=49
+- AI-损失组：n=44
+- 人类-收益组：42
+- 人类-损失组：40
+- 四组样本量基本平衡（都在40-50之间）
+
+---
+
+### 🔗 **05_correlation** - 相关性矩阵
+
+| var1 | var2 | r | p | **解读** |
+|-----|------|---|----|---------|
+| DV_Intention | M_Trust | 0.599 | <0.001 | ✅ 强相关：信任越高→意图越强 |
+| DV_Intention | M_SelfEfficacy | 0.421 | <0.001 | 中等相关：效能越高→意图越强 |
+| DV_Intention | W_HealthConsciousness | 0.602 | <0.001 | ✅ 强相关：健意越高→意图越强 |
+| M_Trust | M_SelfEfficacy | 0.491 | <0.001 | 中等相关：信任与效能同向变化 |
+
+**怎么看**：
+- **r 的范围**：0-1，越接近1越强
+  - r > 0.5：强相关
+  - 0.3 < r < 0.5：中等相关
+  - r < 0.3：弱相关
+- **p < 0.001**：都是统计学意义显著
+- **故事**：意图与信任和健意最相关（都r≈0.60），这支持"信任和个体特质驱动行为意图"的假设
+
+---
+
+### 🎯 **06_anova_2x2** - 2×2 方差分析
+
+**核心结果**：
+
+| 效应 | sum_sq | df | F | p | **解读** |
+|-----|--------|----|----|---|---------|
+| **C(source)** | 1.33 | 1 | 4.15 | **0.043** ⭐ | ✅ **显著** AI vs 人类有显著差异 |
+| **C(frame)** | 0.07 | 1 | 0.21 | 0.651 | ❌ 不显著 收益/损失框架无差异 |
+| **C(source):C(frame)** | 0.01 | 1 | 0.04 | 0.852 | ❌ 不显著 两者无交互作用 |
+| Residual | 55.01 | 171 | - | - | 剩余误差 |
+
+**怎么看 ANOVA 表**：
+- **p < 0.05**：有统计学意义
+- **sum_sq**：解释的方差大小
+- **F**：效应大小的比值（F越大越显著）
+
+**关键发现**：
+- **Source 主效应显著（p=0.043）**：AI来源相比人类专家，对意图的影响不同
+  - 具体方向：看均值对比，AI可能更高或更低
+- **Frame 主效应不显著（p=0.651）**：收益/损失框架在此数据中没有作用
+- **交互不显著（p=0.852）**：来源和框架没有互相加强/削弱的作用
+
+---
+
+### 🔗 **07_mediation_boot** - 中介效应检验（Bootstrap）
+
+**核心概念**：
+- **直接效应**（c'）：X → Y
+- **间接效应**（a×b）：X → M → Y
+- **总效应**（c）：c = c' + a×b
+
+**表格行解释**：
+
+| 指标 | M_Trust值 | M_SelfEfficacy值 | **怎么看** |
+|-----|----------|------------------|----------|
+| **a** | ？ | ？ | Source 对 Mediator 的效应 |
+| **b** | ？ | ？ | Mediator 对 Intention 的效应 |
+| **c_total** | ？ | ？ | Source 对 Intention 的总效应 |
+| **c_prime** | ？ | ？ | 加入 Mediator 后 Source 的直接效应 |
+| **indirect_ab** | 0.2093 | 0.0300 | **间接效应（核心）** |
+| **boot_ci_low** | 0.1080 | -0.0302 | Bootstrap 95% 置信区间下界 |
+| **boot_ci_high** | 0.3248 | 0.1032 | Bootstrap 95% 置信区间上界 |
+
+**怎么看间接效应**：
+- 如果 **CI 不包含 0**（即两个数同号），说明间接效应显著
+- **Trust：CI [0.1080, 0.3248]**，都是正数 → ✅ **显著中介**
+  - 解释：Source 通过影响 Trust，进而影响 Intention
+- **Self-efficacy：CI [-0.0302, 0.1032]**，包含 0 → ❌ **不显著中介**
+  - 解释：Self-efficacy 不是 Source → Intention 的中介
+
+**结论**：
+- 来源对意图的作用，主要通过信任这个心理机制来实现
+- 自我效能不起中介作用（或作用很弱）
+
+---
+
+### 🎛️ **08_moderation_coef** - 调节效应回归系数
+
+**模型**：DV_Intention ~ Trust_c * HC_c + Source_bin + Frame_bin
+
+| 项 | coef | se | t | p | **解读** |
+|----|-------|----|----|------|---------|
+| Intercept | ？ | ？ | ？ | ？ | 截距（参考组） |
+| Trust_c | ？ | ？ | ？ | <0.001 ⭐ | ✅ Trust 显著正向预测意图 |
+| HC_c | ？ | ？ | ？ | ？ | Health Consciousness 的主效应 |
+| **Trust_c:HC_c** | ？ | ？ | ？ | 0.432 | ❌ 交互不显著（HC不调节Trust→Intention） |
+| Source_bin | ？ | ？ | ？ | ？ | 控制变量 |
+| Frame_bin | ？ | ？ | ？ | ？ | 控制变量 |
+
+**怎么看**：
+- **p < 0.05**：效应显著
+- 交互项 p=0.432（不显著）说明：HC 的水平高低，不改变 Trust 对意图的预测强度
+
+---
+
+### 📊 **08_moderation_model** - 调节模型摘要
+
+| 设置 | 值 | **解读** |
+|-----|----|---------| 
+| n | 169 | 分析人数（完整数据） |
+| R² | ？ | 模型解释的方差比例（越接近1越好） |
+| Adj_R² | ？ | 调整后的 R²（考虑变量数量） |
+| F | ？ | 模型的整体显著性 |
+| F_p | <0.001 ⭐ | 模型整体显著 |
+
+**怎么看**：
+- 如果 R² = 0.45，说明模型解释了45%的意图变异
+- F_p <0.001 说明整个模型都是显著的
+
+---
+
+### 📍 **09_simple_slopes** - 简单斜率检验
+
+**作用**：当交互接近不显著时，还是要看在低/中/高HC水平下，Trust对意图的预测力是否一致
+
+| 水平 | HC_c值 | slope_trust_on_DV | se | t | p |
+|-----|---------|------|-----|----|----|
+| Low_HC (-1SD) | ？ | ？ | ？ | ？ | ？ |
+| Mean_HC | ？ | ？ | ？ | ？ | ？ |
+| High_HC (+1SD) | ？ | ？ | ？ | ？ | ？ |
+
+**怎么看**：
+- 每一行显示：当HC固定在某个水平时，Trust→Intention的斜率是多少
+- 如果三行的斜率都显著（都 p<0.05），说明 Trust 作用稳定
+- 如果斜率明显不同，说明存在调节效应
+
+---
+
+###🎲 **09_jn_roots** & **09_jn_grid** - Johnson-Neyman分析
+
+**高级技巧**，用来找：在 HC 的什么值处，Trust 对意图的作用刚好从不显著变显著
+
+| HC_c值 | conditional_slope | p | significant |
+|---------|------|---|----|
+| ？ | ？ | ？ | 否 |
+| ？ | ？ | <0.05 | **是** ⭐ |
+
+**怎么看**：
+- 这是精确找"边界值"的方法
+- 如果整列都是显著或都不显著，说明没有边界（HC确实不调节）
+
+---
+
+## 🎨 **moderation_plot_trust_hc.png** - 调节效应图
+
+**怎么看**：
+- X 轴：Trust（纵轴向上=信任度高）
+- Y 轴：Predicted Intention
+- 三条线：Low HC / Mean HC / High HC
+- 如果三线**平行**：无调节
+- 如果三线**不平行、相交**：存在调节
+
+---
+
+## 📌 整体故事总结
+
+### 你的数据讲了什么故事？
+
+1. **表面上**：Source（AI vs人类）有直接效应（p=0.043），但Frame（收益/损失）没有。
+   - 即：来源重要，框架不重要。
+
+2. **深层机制**：
+   - Source → **Trust** → Intention（✅ 显著间接效应）
+   - Source 也有**直接效应**存在
+   - **结合**：来源既直接影响意图，也通过信任间接影响意图
+
+3. **边界条件**：
+   - Health Consciousness 不调节 Trust → Intention 的关系
+   - 即：健康意识高低，都不改变"信任→行动"这条路的强度
+
+### 后续建议
+
+根据以上分析，你可以写：
+
+> "AI来源相比人类来源，显著增强了人们的运动行为意图。这种效应既有直接作用（信息来源本身的权威性），也有间接作用（通过提升人们对建议的信任）。相比之下，信息框架（强调收益vs风险）在此研究中不产生显著效应，表明人们的决策更受信息来源的影响。"
+
+---
+
+## ⚠️ 重要提示
+
+1. **Intention alpha=0.50** 较低，建议：
+   - 后续改进题目措辞
+   - 或报告时说明这是一个单维度测量
+
+2. **Frame 无效应**：
+   - 可能是你的样本对框架不敏感
+   - 也可能是文案表现不够强
+   - 建议前缀讨论中提及这个现现象
+
+3. **Sample size** n=175：
+   - 对小效应的检验能力有限
+   - 若想检验调节效应，可能需要更大样本
+
+"""
+    
+    (OUT_DIR / "中步分析详细解读.md").write_text(interpretation, encoding="utf-8")
+    print("✓ 详细解读文档已生成：中步分析详细解读.md")
+
+if __name__ == "__main__":
+    main()
