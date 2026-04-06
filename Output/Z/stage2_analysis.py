@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
+from scipy.optimize import minimize
 from scipy.stats import chi2_contingency, t
 import matplotlib.pyplot as plt
 
@@ -38,6 +39,75 @@ def item_total_corr(df_items: pd.DataFrame) -> pd.DataFrame:
         corr = df_items[c].corr(rest)
         rows.append({"item": c, "item_total_corr": corr})
     return pd.DataFrame(rows)
+
+
+def cfa_composite_reliability(df_items: pd.DataFrame) -> dict:
+    d = df_items.dropna().astype(float)
+    p = d.shape[1]
+    if p < 2 or len(d) < 5:
+        return {
+            "n": len(d),
+            "cr": np.nan,
+            "ave": np.nan,
+            "admissible": False,
+            "optimization_ok": False,
+            "loadings": pd.DataFrame(columns=["item", "std_loading", "std_error_var"]),
+        }
+
+    z = (d - d.mean()) / d.std(ddof=1)
+    s = z.cov().values
+    logdet_s = np.linalg.slogdet(s)[1]
+
+    eigvals, eigvecs = np.linalg.eigh(s)
+    lead = np.sqrt(max(eigvals[-1] - 1e-3, 1e-3)) * eigvecs[:, -1]
+    if lead.sum() < 0:
+        lead *= -1
+    lead = np.clip(lead, -0.9, 0.9)
+    uniq0 = np.clip(np.diag(s) - lead**2, 0.1, 2.0)
+    x0 = np.concatenate([lead, np.log(uniq0)])
+    bounds = [(-0.999, 0.999)] * p + [(-8, 3)] * p
+
+    def objective(x):
+        lam = x[:p]
+        uniq = np.exp(x[p:])
+        sigma = np.outer(lam, lam) + np.diag(uniq)
+        sign, logdet_sigma = np.linalg.slogdet(sigma)
+        if sign <= 0:
+            return 1e10
+        sigma_inv = np.linalg.inv(sigma)
+        return logdet_sigma + np.trace(s @ sigma_inv) - logdet_s - p
+
+    res = minimize(objective, x0, method="L-BFGS-B", bounds=bounds)
+    lam = res.x[:p]
+    if lam.sum() < 0:
+        lam *= -1
+    uniq = np.exp(res.x[p:])
+
+    item_var = lam**2 + uniq
+    std_loading = lam / np.sqrt(item_var)
+    std_error_var = uniq / item_var
+    cr = (std_loading.sum() ** 2) / ((std_loading.sum() ** 2) + std_error_var.sum())
+    ave = (std_loading**2).sum() / ((std_loading**2).sum() + std_error_var.sum())
+
+    # Boundary solutions indicate an improper or unstable CFA solution.
+    boundary_hit = np.any(np.abs(lam) > 0.98) or np.any(std_error_var < 0.02)
+    admissible = bool(res.success and not boundary_hit)
+
+    loadings = pd.DataFrame(
+        {
+            "item": list(d.columns),
+            "std_loading": std_loading,
+            "std_error_var": std_error_var,
+        }
+    )
+    return {
+        "n": len(d),
+        "cr": cr,
+        "ave": ave,
+        "admissible": admissible,
+        "optimization_ok": bool(res.success),
+        "loadings": loadings,
+    }
 
 
 def find_col(cols, keyword):
@@ -251,13 +321,18 @@ def main():
     }
     rel_rows = []
     item_total_tables = {}
+    cfa_loading_tables = {}
     for scale_name, items in scale_defs.items():
         d = strict[items]
+        cfa_rel = cfa_composite_reliability(d)
         rel_rows.append(
             {
                 "scale": scale_name,
                 "n_items": len(items),
                 "alpha": cronbach_alpha(d),
+                "cr": cfa_rel["cr"],
+                "ave": cfa_rel["ave"],
+                "cfa_admissible": cfa_rel["admissible"],
                 "mean": d.mean(axis=1).mean(),
                 "sd": d.mean(axis=1).std(ddof=1),
             }
@@ -265,8 +340,12 @@ def main():
         itc = item_total_corr(d)
         itc.insert(0, "scale", scale_name)
         item_total_tables[scale_name] = itc
+        loadings = cfa_rel["loadings"].copy()
+        loadings.insert(0, "scale", scale_name)
+        cfa_loading_tables[scale_name] = loadings
     tbl_reliability = pd.DataFrame(rel_rows)
     tbl_item_total = pd.concat(item_total_tables.values(), ignore_index=True)
+    tbl_cfa_loadings = pd.concat(cfa_loading_tables.values(), ignore_index=True)
 
     # 3) Manipulation check
     ctab_source = pd.crosstab(valid["source"], valid[mc_source_col])
@@ -479,6 +558,7 @@ def main():
         tbl_clean.to_excel(writer, index=False, sheet_name="01_cleaning")
         tbl_reliability.to_excel(writer, index=False, sheet_name="02_reliability")
         tbl_item_total.to_excel(writer, index=False, sheet_name="02_item_total")
+        tbl_cfa_loadings.to_excel(writer, index=False, sheet_name="02_cfa_loadings")
         tbl_manip.to_excel(writer, index=False, sheet_name="03_manip_check")
         ctab_source.to_excel(writer, sheet_name="03_ctab_source")
         ctab_frame.to_excel(writer, sheet_name="03_ctab_frame")
@@ -508,7 +588,10 @@ def main():
         "## 信度",
     ]
     for _, r in tbl_reliability.iterrows():
-        md_lines.append(f"- {r['scale']}: alpha={r['alpha']:.3f}")
+        rel_line = f"- {r['scale']}: alpha={r['alpha']:.3f}, CR={r['cr']:.3f}, AVE={r['ave']:.3f}"
+        if not bool(r["cfa_admissible"]):
+            rel_line += "（单因子CFA出现边界解，CR仅供参考）"
+        md_lines.append(rel_line)
 
     md_lines.extend(
         [
