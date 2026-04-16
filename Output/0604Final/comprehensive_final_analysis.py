@@ -332,10 +332,10 @@ for i, var1 in enumerate(corr_vars):
     for j, var2 in enumerate(corr_vars, 1):
         r = corr_matrix.loc[var1, var2]
         p = p_values.loc[var1, var2]
-        sig = '***' if p < 0.001 else '**' if p < 0.01 else '*' if p < 0.05 else 'ns'
+        sig = '***' if p < 0.001 else '**' if p < 0.01 else '*' if p < 0.05 else ''
         row_cells[j].text = f"{r:.3f}{sig if r != 1.0 else ''}"
 
-note = doc.add_paragraph('注：* p < 0.05, ** p < 0.01, *** p < 0.001, ns = not significant')
+note = doc.add_paragraph('注：* p < 0.05, ** p < 0.01, *** p < 0.001')
 note.style = 'Normal'
 
 doc.add_paragraph()
@@ -416,10 +416,12 @@ for param in params:
     row_cells[1].text = f"{model_2a.params[param]:.4f}"
     row_cells[2].text = f"{model_2a.tvalues[param]:.3f}"
     p_val = model_2a.pvalues[param]
-    row_cells[3].text = f"{p_val:.4f}{'***' if p_val < 0.001 else '**' if p_val < 0.01 else '*' if p_val < 0.05 else ''}"
+    sig_mark = '***' if p_val < 0.001 else '**' if p_val < 0.01 else '*' if p_val < 0.05 else ''
+    row_cells[3].text = f"{p_val:.4f}{sig_mark}"
 
 model_info = doc.add_paragraph(f'R² = {model_2a.rsquared:.4f}, Adj. R² = {model_2a.rsquared_adj:.4f}, F = {model_2a.fvalue:.2f}, p < 0.001')
 model_info.style = 'Normal'
+note = doc.add_paragraph('注：* p < 0.05, ** p < 0.01, *** p < 0.001')
 
 doc.add_paragraph()
 
@@ -439,10 +441,12 @@ for param in params:
     row_cells[1].text = f"{model_2b.params[param]:.4f}"
     row_cells[2].text = f"{model_2b.tvalues[param]:.3f}"
     p_val = model_2b.pvalues[param]
-    row_cells[3].text = f"{p_val:.4f}{'***' if p_val < 0.001 else '**' if p_val < 0.01 else '*' if p_val < 0.05 else ''}"
+    sig_mark = '***' if p_val < 0.001 else '**' if p_val < 0.01 else '*' if p_val < 0.05 else ''
+    row_cells[3].text = f"{p_val:.4f}{sig_mark}"
 
 model_info = doc.add_paragraph(f'R² = {model_2b.rsquared:.4f}, Adj. R² = {model_2b.rsquared_adj:.4f}, F = {model_2b.fvalue:.2f}')
 model_info.style = 'Normal'
+note = doc.add_paragraph('注：* p < 0.05, ** p < 0.01, *** p < 0.001')
 
 doc.add_page_break()
 
@@ -463,10 +467,12 @@ for param in params_model3:
     row_cells[1].text = f"{model_3.params[param]:.4f}"
     row_cells[2].text = f"{model_3.tvalues[param]:.3f}"
     p_val = model_3.pvalues[param]
-    row_cells[3].text = f"{p_val:.4f}{'***' if p_val < 0.001 else '**' if p_val < 0.01 else '*' if p_val < 0.05 else ''}"
+    sig_mark = '***' if p_val < 0.001 else '**' if p_val < 0.01 else '*' if p_val < 0.05 else ''
+    row_cells[3].text = f"{p_val:.4f}{sig_mark}"
 
 model_info = doc.add_paragraph(f'R² = {model_3.rsquared:.4f}, Adj. R² = {model_3.rsquared_adj:.4f}, F = {model_3.fvalue:.2f}, p < 0.001')
 model_info.style = 'Normal'
+note = doc.add_paragraph('注：* p < 0.05, ** p < 0.01, *** p < 0.001')
 
 doc.add_paragraph()
 
@@ -488,10 +494,12 @@ for param in params_c1:
     row_cells[1].text = f"{model_c1.params[param]:.4f}"
     row_cells[2].text = f"{model_c1.tvalues[param]:.3f}"
     p_val = model_c1.pvalues[param]
-    row_cells[3].text = f"{p_val:.4f}{'***' if p_val < 0.001 else '**' if p_val < 0.01 else '*' if p_val < 0.05 else ''}"
+    sig_mark = '***' if p_val < 0.001 else '**' if p_val < 0.01 else '*' if p_val < 0.05 else ''
+    row_cells[3].text = f"{p_val:.4f}{sig_mark}"
 
 model_info = doc.add_paragraph(f'R² = {model_c1.rsquared:.4f}, Adj. R² = {model_c1.rsquared_adj:.4f}, F = {model_c1.fvalue:.2f}, p < 0.001')
 model_info.style = 'Normal'
+note = doc.add_paragraph('注：* p < 0.05, ** p < 0.01, *** p < 0.001')
 
 doc.add_paragraph()
 delta_r2 = model_c1.rsquared - model_3.rsquared
@@ -576,24 +584,57 @@ print("【9】生成汇总表格...")
 
 summary_file = os.path.join(OUTPUT_DIR, '所有分析表格汇总.xlsx')
 
+# 创建带星标的回归结果表格
+def format_regression_results(model, param_list, model_name):
+    """将回归结果转换为带星标的表格格式"""
+    results = []
+    for param in param_list:
+        results.append({
+            '模型': model_name,
+            '变量': param,
+            'β': f"{model.params[param]:.4f}",
+            't值': f"{model.tvalues[param]:.3f}",
+            'p值': f"{model.pvalues[param]:.4f}",
+            '显著性': '***' if model.pvalues[param] < 0.001 else '**' if model.pvalues[param] < 0.01 else '*' if model.pvalues[param] < 0.05 else 'ns'
+        })
+    return pd.DataFrame(results)
+
+# 回归结果汇总（带星标）
+reg_2a = format_regression_results(model_2a, ['Source', 'Frame', 'SourcexFrame'], 'Model 2A')
+reg_2b = format_regression_results(model_2b, ['Source', 'Frame', 'SourcexFrame'], 'Model 2B')
+reg_3 = format_regression_results(model_3, ['Source', 'Frame', 'SourcexFrame', 'Trust', 'SelfEfficacy'], 'Model 3')
+reg_c1 = format_regression_results(model_c1, ['Source', 'Frame', 'SourcexFrame', 'Trust', 'SelfEfficacy', 'HealthConsciousness', 'TrustxHC', 'SExHC'], 'Model C1')
+
+all_regression_results = pd.concat([reg_2a, reg_2b, reg_3, reg_c1], ignore_index=True)
+
 with pd.ExcelWriter(summary_file, engine='openpyxl') as writer:
     desc_table.to_excel(writer, sheet_name='Descriptive Stats')
     corr_matrix.to_excel(writer, sheet_name='Correlation Matrix')
     vif_data.to_excel(writer, sheet_name='VIF Diagnostics', index=False)
     efa_summary.to_excel(writer, sheet_name='EFA Summary', index=False)
     
-    # 回归结果汇总
-    regression_summary = pd.DataFrame({
-        'Model': ['2A (Trust)', '2B (SE)', '3 (No Mod)', 'C1 (Full Mod)'],
+    # 回归结果汇总（带星标）
+    all_regression_results.to_excel(writer, sheet_name='Regression Results', index=False)
+    
+    # 模型拟合指标对比
+    model_comparison = pd.DataFrame({
+        'Model': ['Model 2A (Trust)', 'Model 2B (SE)', 'Model 3 (No Mod)', 'Model C1 (Full Mod)'],
         'R-squared': [model_2a.rsquared, model_2b.rsquared, model_3.rsquared, model_c1.rsquared],
         'Adj R-squared': [model_2a.rsquared_adj, model_2b.rsquared_adj, model_3.rsquared_adj, model_c1.rsquared_adj],
         'F-statistic': [model_2a.fvalue, model_2b.fvalue, model_3.fvalue, model_c1.fvalue],
         'Prob (F-stat)': [model_2a.f_pvalue, model_2b.f_pvalue, model_3.f_pvalue, model_c1.f_pvalue]
     })
-    regression_summary.to_excel(writer, sheet_name='Regression Summary', index=False)
+    model_comparison.to_excel(writer, sheet_name='Model Comparison', index=False)
 
 print(f"✓ Excel汇总表格已生成：{summary_file}")
 
 print("\n" + "="*60)
 print("✓ 全部分析完成！")
+print("="*60)
+print("\n【显著性星标说明】")
+print("* p < 0.05 (显著)")
+print("** p < 0.01 (非常显著)")
+print("*** p < 0.001 (极其显著)")
+print("ns = not significant (不显著)")
+print("\n所有表格均已添加显著性标注。")
 print("="*60)
