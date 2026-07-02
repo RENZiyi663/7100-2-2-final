@@ -1,0 +1,200 @@
+﻿row,stimulus,Source_current,Frame_current,Source_clean_label,Frame_clean_label,Source_AI,Frame_Gain,Intention,HealthC,main_model_complete,current_matches_clean,single_stimulus_text
+1,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,5.33333333333333,5.5,True,True,True
+2,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,6.33333333333333,6.5,True,True,True
+3,"Stimuli B. AI loss,Stimuli B. AI loss",0.0,0.0,AI coach,Loss frame,1.0,0.0,6.0,5.5,True,True,False
+4,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,6.0,5.66666666666667,True,True,True
+5,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,6.0,5.5,True,True,True
+6,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,4.66666666666667,5.16666666666667,True,True,True
+7,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,6.0,6.16666666666667,True,True,True
+8,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,6.0,5.83333333333333,True,True,True
+9,Stimuli C. human gain,0.0,1.0,Human expert,Gain frame,0.0,1.0,6.0,6.0,True,False,True
+10,Stimuli D. human loss,0.0,0.0,Human expert,Loss frame,0.0,0.0,4.66666666666667,5.66666666666667,True,False,True
+11,"Stimuli C. human gain,Stimuli C. human gain,Stimuli C. human gain",1.0,1.0,Human expert,Gain frame,0.0,1.0,5.66666666666667,5.83333333333333,True,True,False
+12,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,6.0,6.33333333333333,True,True,True
+13,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,6.33333333333333,5.83333333333333,True,True,True
+14,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,6.0,6.0,True,True,True
+15,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,5.33333333333333,5.5,True,True,True
+16,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,4.66666666666667,4.5,True,True,True
+17,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,5.66666666666667,5.5,True,True,True
+18,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,6.66666666666667,6.5,True,True,True
+19,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,6.33333333333333,6.33333333333333,True,True,True
+20,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,5.33333333333333,5.66666666666667,True,True,True
+21,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,5.66666666666667,5.83333333333333,True,True,True
+22,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,7.0,7.0,True,True,True
+23,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,5.66666666666667,5.66666666666667,True,True,True
+24,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,6.0,5.33333333333333,True,True,True
+25,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,5.33333333333333,6.0,True,True,True
+26,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,6.0,5.83333333333333,True,True,True
+27,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,6.0,6.33333333333333,True,True,True
+28,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,5.33333333333333,5.33333333333333,True,True,True
+29,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,5.33333333333333,6.16666666666667,True,True,True
+30,"Stimuli D. human loss,Stimuli D. human loss",1.0,0.0,Human expert,Loss frame,0.0,0.0,6.66666666666667,6.16666666666667,True,True,False
+31,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,5.66666666666667,5.83333333333333,True,True,True
+32,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,7.0,7.0,True,True,True
+33,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,6.0,5.66666666666667,True,True,True
+34,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,5.33333333333333,6.16666666666667,True,True,True
+35,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,6.33333333333333,6.16666666666667,True,True,True
+36,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,6.0,5.83333333333333,True,True,True
+37,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,6.33333333333333,6.16666666666667,True,True,True
+38,"Stimuli C. human gain,Stimuli C. human gain",1.0,1.0,Human expert,Gain frame,0.0,1.0,6.33333333333333,6.0,True,True,False
+39,"Stimuli B. AI loss,Stimuli B. AI loss",0.0,0.0,AI coach,Loss frame,1.0,0.0,6.33333333333333,6.0,True,True,False
+40,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,5.66666666666667,5.16666666666667,True,True,True
+41,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,6.0,6.33333333333333,True,True,True
+42,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,6.33333333333333,5.66666666666667,True,True,True
+43,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,5.66666666666667,5.83333333333333,True,True,True
+44,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,5.33333333333333,5.5,True,True,True
+45,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,5.66666666666667,6.16666666666667,True,True,True
+46,"Stimuli D. human loss,Stimuli D. human loss",1.0,0.0,Human expert,Loss frame,0.0,0.0,7.0,6.5,True,True,False
+47,"Stimuli D. human loss,Stimuli D. human loss,Stimuli D. human loss",1.0,0.0,Human expert,Loss frame,0.0,0.0,5.33333333333333,5.83333333333333,True,True,False
+48,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,5.66666666666667,6.0,True,True,True
+49,"Stimuli B. AI loss,Stimuli B. AI loss",0.0,0.0,AI coach,Loss frame,1.0,0.0,5.33333333333333,5.16666666666667,True,True,False
+50,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,6.33333333333333,6.0,True,True,True
+51,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,5.33333333333333,6.33333333333333,True,True,True
+52,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,6.66666666666667,6.0,True,True,True
+53,"Stimuli C. human gain,Stimuli C. human gain",1.0,1.0,Human expert,Gain frame,0.0,1.0,5.66666666666667,4.83333333333333,True,True,False
+54,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,6.0,6.0,True,True,True
+55,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,6.33333333333333,6.5,True,True,True
+56,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,6.0,6.0,True,True,True
+57,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,6.33333333333333,6.0,True,True,True
+58,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,6.66666666666667,6.33333333333333,True,True,True
+59,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,6.0,6.0,True,True,True
+60,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,5.66666666666667,5.5,True,True,True
+61,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,5.66666666666667,5.5,True,True,True
+62,"Stimuli A. AI gain,Stimuli A. AI gain",0.0,1.0,AI coach,Gain frame,1.0,1.0,5.33333333333333,4.83333333333333,True,True,False
+63,"Stimuli D. human loss,Stimuli D. human loss",1.0,0.0,Human expert,Loss frame,0.0,0.0,4.66666666666667,4.66666666666667,True,True,False
+64,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,6.0,6.16666666666667,True,True,True
+65,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,5.66666666666667,5.33333333333333,True,True,True
+66,"Stimuli D. human loss,Stimuli D. human loss",1.0,0.0,Human expert,Loss frame,0.0,0.0,6.66666666666667,6.66666666666667,True,True,False
+67,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,5.33333333333333,5.33333333333333,True,True,True
+68,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,5.33333333333333,5.16666666666667,True,True,True
+69,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,6.33333333333333,5.5,True,True,True
+70,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,6.66666666666667,6.5,True,True,True
+71,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,5.0,5.83333333333333,True,True,True
+72,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,6.0,6.0,True,True,True
+73,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,6.33333333333333,5.83333333333333,True,True,True
+74,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,4.66666666666667,5.16666666666667,True,True,True
+75,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,5.66666666666667,6.0,True,True,True
+76,Stimuli D. human loss,1.0,1.0,Human expert,Loss frame,0.0,0.0,4.66666666666667,5.83333333333333,True,False,True
+77,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,6.0,6.0,True,True,True
+78,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,6.33333333333333,6.33333333333333,True,True,True
+79,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,6.66666666666667,6.5,True,True,True
+80,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,5.66666666666667,5.33333333333333,True,True,True
+81,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,6.66666666666667,6.33333333333333,True,True,True
+82,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,5.66666666666667,6.0,True,True,True
+83,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,5.66666666666667,6.33333333333333,True,True,True
+84,"Stimuli C. human gain,Stimuli C. human gain",1.0,1.0,Human expert,Gain frame,0.0,1.0,6.33333333333333,6.16666666666667,True,True,False
+85,"Stimuli C. human gain,Stimuli C. human gain",1.0,1.0,Human expert,Gain frame,0.0,1.0,6.33333333333333,6.0,True,True,False
+86,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,6.33333333333333,6.83333333333333,True,True,True
+87,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,3.66666666666667,5.0,True,True,True
+88,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,6.33333333333333,6.5,True,True,True
+89,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,5.66666666666667,4.83333333333333,True,True,True
+90,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,6.0,6.5,True,True,True
+91,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,5.66666666666667,6.16666666666667,True,True,True
+92,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,5.33333333333333,5.5,True,True,True
+93,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,6.33333333333333,6.5,True,True,True
+94,"Stimuli D. human loss,Stimuli D. human loss",1.0,0.0,Human expert,Loss frame,0.0,0.0,6.33333333333333,5.5,True,True,False
+95,Stimuli D. human loss,0.0,0.0,Human expert,Loss frame,0.0,0.0,5.33333333333333,4.83333333333333,True,False,True
+96,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,7.0,6.66666666666667,True,True,True
+97,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,6.0,6.0,True,True,True
+98,Stimuli B. AI loss,0.0,1.0,AI coach,Loss frame,1.0,0.0,5.0,6.0,True,False,True
+99,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,5.66666666666667,4.0,True,True,True
+100,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,5.33333333333333,5.66666666666667,True,True,True
+101,"Stimuli C. human gain,Stimuli C. human gain",1.0,1.0,Human expert,Gain frame,0.0,1.0,6.0,5.33333333333333,True,True,False
+102,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,4.0,5.0,True,True,True
+103,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,6.0,5.83333333333333,True,True,True
+104,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,5.33333333333333,6.5,True,True,True
+105,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,5.66666666666667,5.5,True,True,True
+106,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,6.0,6.5,True,True,True
+107,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,6.66666666666667,6.0,True,True,True
+108,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,6.0,5.5,True,True,True
+109,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,6.66666666666667,6.0,True,True,True
+110,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,6.66666666666667,4.83333333333333,True,True,True
+111,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,6.0,6.0,True,True,True
+112,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,6.33333333333333,5.66666666666667,True,True,True
+113,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,6.0,6.33333333333333,True,True,True
+114,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,5.33333333333333,6.0,True,True,True
+115,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,5.33333333333333,4.66666666666667,True,True,True
+116,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,7.0,6.83333333333333,True,True,True
+117,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,5.66666666666667,6.0,True,True,True
+118,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,5.66666666666667,6.0,True,True,True
+119,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,5.0,5.16666666666667,True,True,True
+120,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,7.0,4.83333333333333,True,True,True
+121,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,6.33333333333333,6.16666666666667,True,True,True
+122,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,6.0,6.16666666666667,True,True,True
+123,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,6.0,6.16666666666667,True,True,True
+124,"Stimuli D. human loss,Stimuli D. human loss",0.0,0.0,Human expert,Loss frame,0.0,0.0,6.66666666666667,6.33333333333333,True,False,False
+125,Stimuli B. AI loss,0.0,1.0,AI coach,Loss frame,1.0,0.0,5.33333333333333,5.33333333333333,True,False,True
+126,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,5.33333333333333,5.66666666666667,True,True,True
+127,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,6.0,6.0,True,True,True
+128,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,5.66666666666667,6.16666666666667,True,True,True
+129,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,5.0,4.66666666666667,True,True,True
+130,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,5.33333333333333,5.83333333333333,True,True,True
+131,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,5.33333333333333,4.83333333333333,True,True,True
+132,"Stimuli C. human gain,Stimuli C. human gain",0.0,1.0,Human expert,Gain frame,0.0,1.0,6.33333333333333,6.5,True,False,False
+133,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,5.33333333333333,5.5,True,True,True
+134,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,5.33333333333333,5.0,True,True,True
+135,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,6.0,6.0,True,True,True
+136,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,6.33333333333333,6.16666666666667,True,True,True
+137,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,7.0,6.0,True,True,True
+138,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,5.66666666666667,5.0,True,True,True
+139,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,4.33333333333333,4.83333333333333,True,True,True
+140,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,5.33333333333333,4.83333333333333,True,True,True
+141,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,5.33333333333333,5.0,True,True,True
+142,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,3.0,4.83333333333333,True,True,True
+143,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,5.33333333333333,6.0,True,True,True
+144,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,5.33333333333333,6.66666666666667,True,True,True
+145,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,6.0,6.33333333333333,True,True,True
+146,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,5.33333333333333,5.0,True,True,True
+147,"Stimuli C. human gain,Stimuli C. human gain",1.0,1.0,Human expert,Gain frame,0.0,1.0,5.66666666666667,4.66666666666667,True,True,False
+148,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,6.33333333333333,5.33333333333333,True,True,True
+149,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,6.33333333333333,5.83333333333333,True,True,True
+150,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,6.0,6.16666666666667,True,True,True
+151,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,6.33333333333333,6.0,True,True,True
+152,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,6.66666666666667,5.33333333333333,True,True,True
+153,Stimuli B. AI loss,0.0,1.0,AI coach,Loss frame,1.0,0.0,5.0,5.0,True,False,True
+154,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,5.66666666666667,5.16666666666667,True,True,True
+155,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,4.0,4.33333333333333,True,True,True
+156,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,6.66666666666667,5.66666666666667,True,True,True
+157,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,7.0,6.66666666666667,True,True,True
+158,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,6.33333333333333,6.16666666666667,True,True,True
+159,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,5.33333333333333,4.33333333333333,True,True,True
+160,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,6.33333333333333,6.0,True,True,True
+161,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,7.0,6.66666666666667,True,True,True
+162,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,5.66666666666667,5.83333333333333,True,True,True
+163,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,6.33333333333333,6.16666666666667,True,True,True
+164,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,6.0,6.16666666666667,True,True,True
+165,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,5.33333333333333,5.66666666666667,True,True,True
+166,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,6.33333333333333,6.16666666666667,True,True,True
+167,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,7.0,6.66666666666667,True,True,True
+168,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,5.0,5.16666666666667,True,True,True
+169,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,5.33333333333333,4.0,True,True,True
+170,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,6.33333333333333,5.33333333333333,True,True,True
+171,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,6.0,6.33333333333333,True,True,True
+172,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,5.0,5.33333333333333,True,True,True
+173,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,6.33333333333333,5.33333333333333,True,True,True
+174,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,2.66666666666667,5.0,True,True,True
+175,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,5.66666666666667,5.83333333333333,True,True,True
+176,"Stimuli D. human loss,Stimuli D. human loss",1.0,0.0,Human expert,Loss frame,0.0,0.0,5.33333333333333,5.83333333333333,True,True,False
+177,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,5.33333333333333,5.66666666666667,True,True,True
+178,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,6.0,6.0,True,True,True
+179,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,6.33333333333333,5.83333333333333,True,True,True
+180,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,6.66666666666667,6.16666666666667,True,True,True
+181,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,6.33333333333333,6.33333333333333,True,True,True
+182,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,6.0,6.0,True,True,True
+183,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,5.0,4.83333333333333,True,True,True
+184,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,6.0,5.33333333333333,True,True,True
+185,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,6.33333333333333,6.33333333333333,True,True,True
+186,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,5.66666666666667,6.5,True,True,True
+187,"Stimuli C. human gain,Stimuli C. human gain",1.0,1.0,Human expert,Gain frame,0.0,1.0,6.66666666666667,5.66666666666667,True,True,False
+188,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,6.33333333333333,6.5,True,True,True
+189,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,6.0,5.66666666666667,True,True,True
+190,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,5.66666666666667,5.33333333333333,True,True,True
+191,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,6.66666666666667,5.66666666666667,True,True,True
+192,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,6.33333333333333,5.0,True,True,True
+193,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,5.33333333333333,6.33333333333333,True,True,True
+194,Stimuli C. human gain,1.0,1.0,Human expert,Gain frame,0.0,1.0,6.0,6.0,True,True,True
+195,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,5.66666666666667,5.83333333333333,True,True,True
+196,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,5.33333333333333,5.5,True,True,True
+197,Stimuli D. human loss,1.0,0.0,Human expert,Loss frame,0.0,0.0,5.66666666666667,5.0,True,True,True
+198,Stimuli A. AI gain,0.0,1.0,AI coach,Gain frame,1.0,1.0,5.33333333333333,6.0,True,True,True
+199,Stimuli B. AI loss,0.0,0.0,AI coach,Loss frame,1.0,0.0,5.33333333333333,6.0,True,True,True

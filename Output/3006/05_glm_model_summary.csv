@@ -1,0 +1,2 @@
+﻿model,n,df_model,df_resid,R2,adj_R2,F,p,matches_spss_resid_df_179
+Intention ~ Source_clean * Frame_clean * HealthC_c,199,7,191,0.40290358314237895,0.38102046838843473,18.41161953737684,0.0,False

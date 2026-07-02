@@ -1,0 +1,5 @@
+﻿hypothesis,statement,primary_test,result,evidence
+H1,Health Consciousness positively predicts Intention,HealthC_c main effect,supported,"F=41.1216, p=1.10e-09, eta_p2=0.1772"
+H2,HealthC moderates the Source effect,Source x HealthC,not supported,"F=0.3716, p=0.5428, eta_p2=0.0019"
+H3,HealthC moderates the Frame effect,Frame x HealthC,supported,"F=14.9700, p=1.50e-04, eta_p2=0.0727"
+H4,HealthC moderates the joint Source x Frame effect,Source x Frame x HealthC,not supported,"F=3.5913, p=0.0596, eta_p2=0.0185"

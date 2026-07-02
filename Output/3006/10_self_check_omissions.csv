@@ -1,0 +1,10 @@
+﻿check,status,detail
+uses_group_member_model,pass,Main model is Intention ~ Source * Frame * HealthC_c with 7 predictors.
+uses_current_final_r_model_csv,pass,Data/R新模型/7100.csv
+keeps_legacy_final_xlsx_separate,pass,Data/7100_Final.xlsx belongs to the older 0604Final mediation scripts.
+stimuli_clean_coding,pass,Source/Frame are rebuilt from 随机元素 labels for the primary model.
+numeric_coding_conflicts_checked,pass,9 rows conflict between current numeric Source/Frame and Stimuli-derived clean labels.
+spss_df_reproduction,warning,"No tested scenario reproduces df_error=179; current plausible Ns are 199, 190, 178, and 171."
+healthc_centering,pass,HealthC_c is HealthC minus the scenario-specific mean.
+no_extra_controls_in_primary_model,pass,No Sex/control variable is included because SPSS screenshot shows 7 predictor df.
+pdf_export,pass,Output/3006/发给组员_3006新模型复现与交叉检验摘要.pdf

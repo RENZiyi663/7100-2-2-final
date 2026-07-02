@@ -1,0 +1,15 @@
+﻿metric,value,note
+raw_rows,199,Rows read from Data/R新模型/7100.csv
+main_model_complete_rows,199,"Complete Source_clean, Frame_clean, Intention, HealthC"
+expected_spss_resid_df,179,From screenshots
+expected_spss_implied_n,187,7 predictors + intercept
+cell_n__AI coach__Gain frame,49,Stimuli-derived clean condition
+cell_n__AI coach__Loss frame,51,Stimuli-derived clean condition
+cell_n__Human expert__Gain frame,51,Stimuli-derived clean condition
+cell_n__Human expert__Loss frame,48,Stimuli-derived clean condition
+current_Source_by_clean__AI coach__0.0,100,Checks existing CSV Source coding against Stimuli
+current_Source_by_clean__Human expert__0.0,5,Checks existing CSV Source coding against Stimuli
+current_Source_by_clean__Human expert__1.0,94,Checks existing CSV Source coding against Stimuli
+current_Frame_by_clean__Gain frame__1.0,100,Checks existing CSV Frame coding against Stimuli
+current_Frame_by_clean__Loss frame__0.0,95,Checks existing CSV Frame coding against Stimuli
+current_Frame_by_clean__Loss frame__1.0,4,Checks existing CSV Frame coding against Stimuli

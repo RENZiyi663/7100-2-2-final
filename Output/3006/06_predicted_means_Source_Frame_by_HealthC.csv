@@ -1,0 +1,13 @@
+﻿HealthC_level,HealthC_raw,Source,Frame,predicted_Intention
+Low HealthC (-1 SD),5.1894961049861035,Human expert,Loss frame,5.309521142388091
+Low HealthC (-1 SD),5.1894961049861035,Human expert,Gain frame,5.855463344338671
+Low HealthC (-1 SD),5.1894961049861035,AI coach,Loss frame,5.20072018254277
+Low HealthC (-1 SD),5.1894961049861035,AI coach,Gain frame,5.367843534364868
+Mean HealthC,5.772194304857622,Human expert,Loss frame,5.8047992322454505
+Mean HealthC,5.772194304857622,Human expert,Gain frame,5.9398939321245
+Mean HealthC,5.772194304857622,AI coach,Loss frame,5.766020218006855
+Mean HealthC,5.772194304857622,AI coach,Gain frame,5.816786529541878
+High HealthC (+1 SD),6.35489250472914,Human expert,Loss frame,6.30007732210281
+High HealthC (+1 SD),6.35489250472914,Human expert,Gain frame,6.02432451991033
+High HealthC (+1 SD),6.35489250472914,AI coach,Loss frame,6.331320253470941
+High HealthC (+1 SD),6.35489250472914,AI coach,Gain frame,6.265729524718889

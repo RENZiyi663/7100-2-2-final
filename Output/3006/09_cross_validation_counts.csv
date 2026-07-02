@@ -1,0 +1,12 @@
+﻿metric,value,note
+source_csv,Data/R新模型/7100.csv,Final R-model CSV used for the 3006 re-analysis
+source_csv_exists,True,Confirms the analysis input file is available
+legacy_final_xlsx_exists,True,Older 0604Final scripts used this Excel file for the previous mediation model
+raw_rows,199,Rows in source CSV
+analysis_complete_rows,199,Complete clean Source/Frame/Intention/HC rows
+current_matches_clean_rows,190,Rows where current numeric Source/Frame agree with Stimuli-derived clean labels
+current_mismatch_rows,9,Rows where current numeric Source/Frame conflict with Stimuli labels
+single_stimulus_rows,178,Rows whose 随机元素 has no comma/duplicate marker
+duplicated_stimulus_text_rows,21,Rows whose 随机元素 contains comma/duplicate marker
+single_and_match_rows,171,Rows satisfying both stricter checks
+spss_implied_n,187,df_error 179 + 7 predictors + intercept
