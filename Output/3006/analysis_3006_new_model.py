@@ -15,6 +15,9 @@ from __future__ import annotations
 import csv
 import math
 import re
+import shutil
+import subprocess
+import tempfile
 import textwrap
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Sequence, Tuple
@@ -663,6 +666,57 @@ def build_group_markdown(counts: Sequence[Dict[str, object]], scenarios: Sequenc
 
 
 def markdown_to_pdf(markdown_text: str, pdf_path: Path) -> bool:
+    if shutil.which("pandoc") and shutil.which("wkhtmltopdf"):
+        css = """
+body {
+  font-family: "Noto Sans CJK SC", "Noto Serif CJK SC", "WenQuanYi Zen Hei", sans-serif;
+  font-size: 12px;
+  line-height: 1.55;
+  color: #111;
+}
+h1 { font-size: 22px; margin: 0 0 16px; }
+h2 { font-size: 16px; margin: 22px 0 10px; border-bottom: 1px solid #ddd; padding-bottom: 4px; }
+p { margin: 7px 0; }
+ul, ol { margin: 7px 0 7px 22px; padding: 0; }
+li { margin: 3px 0; }
+code, pre { font-family: "DejaVu Sans Mono", monospace; }
+pre { background: #f6f8fa; border: 1px solid #ddd; padding: 8px; white-space: pre-wrap; }
+table { width: 100%; border-collapse: collapse; table-layout: fixed; margin: 10px 0 16px; font-size: 9.5px; }
+th, td { border: 1px solid #bbb; padding: 4px 5px; vertical-align: top; word-wrap: break-word; overflow-wrap: anywhere; }
+th { background: #f1f3f5; font-weight: 700; }
+@page { size: A4; margin: 14mm 11mm; }
+"""
+        pdf_path.parent.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmpdir_path = Path(tmpdir)
+            md_path = tmpdir_path / "summary.md"
+            css_path = tmpdir_path / "pdf.css"
+            md_path.write_text(markdown_text, encoding="utf-8")
+            css_path.write_text(css, encoding="utf-8")
+            result = subprocess.run(
+                [
+                    "pandoc",
+                    str(md_path),
+                    "--from",
+                    "markdown+pipe_tables",
+                    "--standalone",
+                    "--metadata",
+                    "title=3006 新模型复现与交叉检验摘要",
+                    "--css",
+                    str(css_path),
+                    "--pdf-engine=wkhtmltopdf",
+                    "--pdf-engine-opt=--enable-local-file-access",
+                    "--pdf-engine-opt=--encoding",
+                    "--pdf-engine-opt=UTF-8",
+                    "-o",
+                    str(pdf_path),
+                ],
+                capture_output=True,
+                text=True,
+            )
+            if result.returncode == 0 and pdf_path.exists():
+                return True
+
     try:
         from reportlab.lib.pagesizes import A4
         from reportlab.pdfbase import pdfmetrics
